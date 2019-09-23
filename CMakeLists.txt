@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 2.8)
 
 project(post_treatment)
 
-set(INC_DIR /usr/locla/gromacs/include/gromacs)
-set(LINK_DIR /usr/local/gromacs/lib64/)
+find_package(gromacs REQUIRED)
+include_directories(${GROMACS_INCLUDE_DIRS})
+target_link_libraries(${GROMACS_LIBRARIES})
+link_libraries(libgromacs)
+
 
 add_executable(${PROJECT_NAME} "main.cpp")
+
+target_link_libraries(${PROJECT_NAME} libgromacs)
