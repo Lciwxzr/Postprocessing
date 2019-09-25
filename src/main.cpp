@@ -2,23 +2,26 @@
 #include "gromacs/fileio/xtcio.h"
 #include "stdlib.h"
 #include <vector>
+#include "cal_func.h"
+
 
 
 int main()
 {
 
     t_fileio   *xd;
-    int         indent;
-    char        buf[256];
     rvec       *x;
     matrix      box;
-    int         nframe, natoms;
+    int          natoms;
     int64_t     step;
     real        prec, time;
     gmx_bool    bOK;
     int criter;
-    rvec * cor;
-    std::vector<rvec*> cor_set;
+    std::vector<rvec*> coor_set;
+    std::vector<float> result;
+//    you need to edit the type of the two result cache variable in order to fit your own needs
+    float res_temp, res_cache;
+    res_temp = 0;
 
 
 
@@ -28,13 +31,18 @@ int main()
 //    cin.getline(fn, 6);
     xd = open_xtc(fn, "r");
     read_first_xtc(xd, &natoms, &step, &time, box, &x, &prec, &bOK);
+    coor_set.reserve(natoms);
     for (int iteror=0;iteror<natoms;iteror++)
     {
-        cor_set.push_back(x+iteror);
+        coor_set.push_back(x+iteror);
     }
-
-    criter = read_next_xtc(xd, natoms, &step, &time, box, x, &prec, &bOK) ;
-
+    do{
+        res_cache = count_value(coor_set, res_temp);
+        result.push_back(res_cache);
+        criter = read_next_xtc(xd, natoms, &step, &time, box, x, &prec, &bOK) ;
+    }while(criter!=0);
     std::cout << "Hello World!" << std::endl;
     return 0;
 }
+
+
