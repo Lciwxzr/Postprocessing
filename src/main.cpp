@@ -26,11 +26,41 @@ int main()
     res_temp = 0;
 
 
+    //    code below is for reading index
+
+
+        int *index, isize;
+        char n_file[1000];
+        char *grpname;
+
+
+        std::cout<<"input the ndx file to read:\n";
+        std::cin>>n_file;
+
+
+
+
+        rd_index(n_file, 1, &isize, &index, &grpname);
+
+        std::vector<int> group_index_vec;
+
+
+        for(int iteror=0; iteror<isize; iteror++)
+        {
+            group_index_vec.push_back(*(index+iteror));
+
+        }
+
+    //    code above can generate a set of index which give a reference to atoms for analysis
+
+
+
+
+//code below is for reading coordinate info and get result
 
     char fn[1000] ;
     std::cout<<"input the path of file :\n";
     std::cin >> fn;
-//    cin.getline(fn, 6);
     xd = open_xtc(fn, "r");
     read_first_xtc(xd, &natoms, &step, &time, box, &x, &prec, &bOK);
 
@@ -40,7 +70,7 @@ int main()
             coor_set.push_back(x+iteror);
         }
         coor_set_time.push_back(coor_set);
-        res_cache = count_value(coor_set, res_temp);
+        res_cache = count_value(coor_set, group_index_vec, res_temp);
 
         result.push_back(res_cache);
         for (int iteror=0;iteror<natoms;iteror++)
@@ -54,34 +84,9 @@ int main()
 
 //    code above is for frame reading and getting coordinate info of single atom
 
-//    code below is for reading index
 
 
-    int *index, isize;
-    char n_file[1000];
-    char *grpname;
-
-
-    std::cout<<"input the ndx file to read:\n";
-    std::cin>>n_file;
-
-
-
-
-    rd_index(n_file, 1, &isize, &index, &grpname);
-
-    std::vector<int> group_index_vec;
-
-
-    for(int iteror=0; iteror<isize; iteror++)
-    {
-        group_index_vec.push_back(*(index+iteror));
-
-    }
-
-//    these code can generate a set of index which give a reference to atoms for analysis
-
-    std::cout<<"debug stoppoint";
+    std::cout<<"line for debug stoppoint";
 
     return 0;
 }

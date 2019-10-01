@@ -10,7 +10,7 @@
 //secondly the result cache which provides a type reference for the function
 
 template <class T>
-T count_value(const std::vector<rvec*> coor_set, T& res_temp)
+T count_value(const std::vector<rvec*> coor_set, const std::vector<int> index, T& res_temp)
 {
     res_temp+= 1;
 
