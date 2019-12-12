@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/lciwxzr/workspace/Cpp/post_treatment/build",
+  "command": "/bin/g++-7   -I/usr/local/gromacs/include  -g   -o CMakeFiles/post_treatment.dir/src/main.cpp.o -c /home/lciwxzr/workspace/Cpp/post_treatment/src/main.cpp",
+  "file": "/home/lciwxzr/workspace/Cpp/post_treatment/src/main.cpp"
+}
+]

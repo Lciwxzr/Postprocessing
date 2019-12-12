@@ -4,6 +4,9 @@
 #include <vector>
 #include "cal_func.h"
 #include "gromacs/topology/index.h"
+#include "gromacs/fileio/enxio.h"
+#include "gromacs/trajectory/energyframe.h"
+#include "gromacs/utility/smalloc.h"
 
 
 
@@ -19,6 +22,7 @@ int main()
     gmx_bool    bOK;
     int criter;
     std::vector<rvec*> coor_set;
+    std::vector<matrix> box_set;
     std::vector<std::vector<rvec*>> coor_set_time;
     std::vector<float> result;
 //    you need to edit the type of the two result cache variable in order to fit your own needs
@@ -69,6 +73,7 @@ int main()
         {
             coor_set.push_back(x+iteror);
         }
+        float a = coor_set[1][0][1];
         coor_set_time.push_back(coor_set);
         res_cache = count_value(coor_set, group_index_vec, res_temp);
 
@@ -83,6 +88,25 @@ int main()
     }while(criter!=0);
 
 //    code above is for frame reading and getting coordinate info of single atom
+
+//    code below is for energy read and simple analysis template
+
+    char ener_file_name[1000];
+     ener_file_t fp;
+     t_enxframe  *fr;
+     gmx_enxnm_t *enm = nullptr;
+     std::cout<<"input the path for energy file:\n";
+     std::cin>>ener_file_name;
+     fp = open_enx(ener_file_name, "r");
+     snew(fr, 1);
+     do_enxnms(fp, &(fr->nre), &enm);
+     gmx_enxnm_t *b_test;
+     b_test = enm+1;
+
+     do_enx(fp,fr);
+
+     do_enx(fp,fr);
+//     free_enxframe(fr);
 
 
 

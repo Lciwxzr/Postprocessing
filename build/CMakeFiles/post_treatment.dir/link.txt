@@ -1,0 +1,1 @@
+/bin/g++-7  -g  -rdynamic CMakeFiles/post_treatment.dir/src/main.cpp.o  -o post_treatment -Wl,-rpath,/usr/local/gromacs/lib64 /usr/local/gromacs/lib64/libgromacs.so.4.0.0 -lm 
